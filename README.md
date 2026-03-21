@@ -38,6 +38,7 @@ Frontend (React) → Backend (Spring Boot) → Database (MySQL)
 **🪜 Phase Breakdown**
 
 **🧱 Phase 1 — Manual Deployment**
+
 Run all services manually using terminal
 
 Configure database connections
