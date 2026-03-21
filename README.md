@@ -90,13 +90,19 @@ Manual Execution → Scripted Automation → CI/CD → Secure Pipeline → AI-Dr
 **📊 What This Project Demonstrates**
 
 Deep understanding of system architecture
+
 Ability to move from manual to automated systems
+
 Practical DevOps and DevSecOps skills
+
 Integration of modern AI tools into workflows
 
 **🧠 Key Learnings**
 
 Manual processes expose real system behavior
+
 Automation improves reliability and speed
+
 Security must be integrated, not added later
+
 AI enhances productivity and decision-making
