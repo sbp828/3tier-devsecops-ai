@@ -205,6 +205,12 @@ By the end of this phase, you will:
 
 ---
 
+## 💣 Troubleshooting
+
+An **Incident Playbook** is included to simulate real-world failures and guide systematic debugging:
+
+👉 `incidents/README.md`
+
 ## ➡️ Next Phase
 
 👉 Phase 2: Shell Automation
