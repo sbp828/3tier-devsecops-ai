@@ -19,7 +19,7 @@ intelligent (AI-driven) operations
 🏗️ Architecture
 Frontend (React) → Backend (Spring Boot) → Database (MySQL)
 📂 Repository Structure
-3tier-devsecops-ai/
+```3tier-devsecops-ai/
 │
 ├── phase-1-manual/            # Manual deployment using terminal
 ├── phase-2-shell-automation/  # Bash scripts for automation
@@ -29,7 +29,7 @@ Frontend (React) → Backend (Spring Boot) → Database (MySQL)
 ├── phase-6-ai-ops/            # AI-driven operations & analysis
 │
 └── README.md                  # You are here
-
+```
 
 🪜 Phase Breakdown
 🧱 Phase 1 — Manual Deployment
