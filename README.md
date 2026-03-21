@@ -18,6 +18,7 @@ intelligent (AI-driven) operations
 
 🏗️ Architecture
 Frontend (React) → Backend (Spring Boot) → Database (MySQL)
+
 📂 Repository Structure
 ```3tier-devsecops-ai/
 │
