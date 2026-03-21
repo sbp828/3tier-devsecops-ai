@@ -1,4 +1,4 @@
-🚀 3-Tier DevSecOps with AI — From Manual to Intelligent Automation
+#🚀 3-Tier DevSecOps with AI — From Manual to Intelligent Automation
 📌 Overview
 
 This repository demonstrates the complete journey of building, deploying, securing, and automating a 3-tier application — starting from manual terminal-based deployment to fully automated DevSecOps with AI integration
