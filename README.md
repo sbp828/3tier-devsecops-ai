@@ -39,43 +39,56 @@ Frontend (React) → Backend (Spring Boot) → Database (MySQL)
 
 **🧱 Phase 1 — Manual Deployment**
 Run all services manually using terminal
+
 Configure database connections
+
 Debug using CLI tools
 
 **Focus:**
 Understanding system internals, ports, and dependencies
 
 **⚙️ Phase 2 — Shell Automation**
+
 Automate setup using bash scripts
+
 Create repeatable deployment steps
 
 **Focus:**
 Reducing manual effort and human error
 
 **🐳 Phase 3 — Containerization**
+
 Package application using containers
+
 Standardize environments across systems
 
 **Focus:**
 Portability and consistency
 
 **🚀 Phase 4 — CI/CD Pipeline**
+
 Automate build, test, and deployment
+
 Trigger workflows on code changes
 
 **Focus:**
 Continuous delivery and faster iteration
 
 **🔐 Phase 5 — DevSecOps**
+
 Integrate security into pipeline
+
 Scan code, dependencies, and runtime
 
 **Focus:**
 Secure-by-design systems
 
 **🤖 Phase 6 — AI-Powered Operations**
+
 AI-assisted code analysis
+
 Intelligent log monitoring
+
 Automated issue detection and fixes
 
 **Focus:**
