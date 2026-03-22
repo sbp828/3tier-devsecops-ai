@@ -158,7 +158,7 @@ sudo apt install -y git nodejs npm apache2
 sudo systemctl start apache2
 sudo systemctl enable apache2
 ```
-Check once : http://your-ec2-ip
+Check once : http://your-ec2-ip - You should see apache page
 
 ### Pull Code from GitHub to EC2
 
@@ -188,7 +188,7 @@ sudo systemctl restart apache2
 
 ### 6️⃣ Test the Application
 
-* Open browser:
+* Open browser: http://your-ec2-ip
 
 ```
 👉 Your React app is LIVE 🎉
