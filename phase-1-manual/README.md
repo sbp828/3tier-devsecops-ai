@@ -146,7 +146,7 @@ spring.datasource.password=password
 sudo apt update
 sudo apt install nginx -y
 ```
-### Install required toolssudo apt update
+### Install required tools
 
 ```bash
 sudo apt update
