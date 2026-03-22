@@ -11,8 +11,11 @@ One application. Multiple levels of maturity.
 Each phase improves upon the previous one by introducing:
 
 better automation
+
 improved reliability
+
 stronger security
+
 intelligent (AI-driven) operations
 
 
