@@ -146,27 +146,43 @@ spring.datasource.password=password
 sudo apt update
 sudo apt install nginx -y
 ```
+### Install required toolssudo apt update
 
-* Deploy frontend build:
+```bash
+sudo apt update
+sudo apt install -y git nodejs npm apache2
+```
+### Start Apache
+
+```bash
+sudo systemctl start apache2
+sudo systemctl enable apache2
+```
+Check once : http://your-ec2-ip
+
+### Pull Code from GitHub to EC2
+
+```bash
+git clone https://github.com/your-username/my-app.git
+cd my-app
+```
+
+### Build the React App
+```bash
+npm install
+npm run build
+```
+👉 This creates: my-app/build/
+
+* Deploy frontend build to Apache:
 
 ```bash
 sudo rm -rf /var/www/html/*
 sudo cp -r build/* /var/www/html/
 ```
+### 🔄 Restart Apache
 
-* Configure Nginx reverse proxy:
-
-```
-location /api {
-    proxy_pass http://<app-server-ip>:8080;
-}
-```
-
-Restart:
-
-```bash
-sudo systemctl restart nginx
-```
+sudo systemctl restart apache2
 
 ---
 
@@ -175,7 +191,7 @@ sudo systemctl restart nginx
 * Open browser:
 
 ```
-http://<web-server-ip>
+👉 Your React app is LIVE 🎉
 ```
 
 * Verify:
