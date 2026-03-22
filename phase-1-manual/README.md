@@ -188,6 +188,10 @@ sudo systemctl restart apache2
 
 ### 6️⃣ Test the Application
 
+Apache is serving your files ✅
+
+Your React app is deployed ✅
+
 * Open browser: http://your-ec2-ip
 
 ```
