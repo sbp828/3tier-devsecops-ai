@@ -1,4 +1,4 @@
-# 📘 Phase 2: Shell Automation (3-Tier DevSecOps Project)
+# 📘 Phase 2: Shell Automation
 
 ## 🎯 Goal
 
