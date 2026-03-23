@@ -146,25 +146,29 @@ spring.datasource.password=password
 sudo apt update
 sudo apt install nginx -y
 ```
-### Install required tools
+### Start and enable nginx and check status:
 
 ```bash
-sudo apt update
-sudo apt install -y git nodejs npm apache2
+sudo systemctl start nginx
+sudo systemctl enable nginx
+sudo systemctl status nginx
 ```
-### Start Apache
+
+### 📁 Clean default web folder
+
+Nginx serves from: /var/www/html
+
+Clear it:
 
 ```bash
-sudo systemctl start apache2
-sudo systemctl enable apache2
+sudo rm -rf /var/www/html/*
 ```
-Check once : http://your-ec2-ip - You should see apache page
 
 ### Pull Code from GitHub to EC2
 
 ```bash
-git clone https://github.com/your-username/my-app.git
-cd my-app
+git clone https://github.com/your-username/3tier-devsecops-ai.git
+cd localhelp-frontend
 ```
 
 ### Build the React App
@@ -172,23 +176,19 @@ cd my-app
 npm install
 npm run build
 ```
-👉 This creates: my-app/build/
+### 👉 This creates: build/
 
-* Deploy frontend build to Apache:
+### 📦 Deploy React to Nginx
+
+Copy build files:
 
 ```bash
-sudo rm -rf /var/www/html/*
 sudo cp -r build/* /var/www/html/
 ```
-### 🔄 Restart Apache
-
-sudo systemctl restart apache2
-
----
 
 ### 6️⃣ Test the Application
 
-Apache is serving your files ✅
+NGINX is serving your files ✅
 
 Your React app is deployed ✅
 
