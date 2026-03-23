@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import { useCart } from "./CartContext";
+import { useNavigate } from "react-router-dom";
 import "./App.css";
 
 function Help() {
-  const { cart, addToCart } = useCart();
-  const [selectedService, setSelectedService] = useState(null);
+  const { cart, addToCart, increaseQty, decreaseQty } = useCart();
+  const navigate = useNavigate();
+
+  const [selectedService, setSelectedService] = useState("Medicine");
 
   const services = ["Medicine", "Parcel", "Grocery", "Bike Ride", "Elder Assist"];
 
@@ -16,49 +19,91 @@ function Help() {
     "Ibuprofen"
   ];
 
+  const getQty = (name) => {
+    const item = cart.find((i) => i.name === name);
+    return item ? item.quantity : 0;
+  };
+
   return (
-    <div className="page">
+    <div className="help-page">
 
       {/* TOP BAR */}
       <div className="help-topbar">
+
         <h2>Local Help Services</h2>
 
-        <div className="cart">
-          🛒 <span>{cart.length}</span>
+        <div className="top-actions">
+
+          {/* CART */}
+          <div className="cart" onClick={() => navigate("/cart")}>
+            🛒 <span>{cart.reduce((sum, i) => sum + i.quantity, 0)}</span>
+          </div>
+
+          {/* BACK */}
+          <button className="back-btn" onClick={() => navigate("/")}>
+            ⬅ Back
+          </button>
+
         </div>
+
       </div>
 
-      {/* SERVICE BUTTONS */}
-      <div className="service-grid">
-        {services.map((s, i) => (
-          <button key={i} onClick={() => setSelectedService(s)}>
-            {s}
+      {/* SERVICES */}
+      <div className="services">
+        {services.map((service) => (
+          <button
+            key={service}
+            onClick={() => setSelectedService(service)}
+            className={selectedService === service ? "active" : ""}
+          >
+            {service}
           </button>
         ))}
       </div>
 
-      {/* MEDICINE LIST */}
+      {/* MEDICINE SECTION */}
       {selectedService === "Medicine" && (
-        <div className="items">
+        <div className="medicine-section">
 
-          <h3>Available Medicines</h3>
+          <h3>💊 Medicines</h3>
 
-          {medicineList.map((m, i) => (
-            <div className="item" key={i}>
-              <span>{m}</span>
-              <button onClick={() => addToCart(m)}>
-                Add to Cart
-              </button>
-            </div>
-          ))}
+          <div className="medicine-grid">
+            {medicineList.map((med) => {
+              const qty = getQty(med);
 
-        </div>
-      )}
+              return (
+                <div className="medicine-card" key={med}>
+                  <h3>{med}</h3>
 
-      {/* OTHER SERVICES PLACEHOLDER */}
-      {selectedService && selectedService !== "Medicine" && (
-        <div className="items">
-          <h3>{selectedService} Service Coming Soon</h3>
+                  {qty === 0 ? (
+                    <button
+                      className="add-btn"
+                      onClick={() => addToCart({ name: med })}
+                    >
+                      Add to Cart
+                    </button>
+                  ) : (
+                    <div className="qty-controls">
+                      <button onClick={() => decreaseQty(med)}>➖</button>
+                      <span>{qty}</span>
+                      <button
+                        onClick={() => increaseQty(med)}
+                        disabled={qty >= 5}
+                      >
+                        ➕
+                      </button>
+                    </div>
+                  )}
+
+                  {qty >= 5 && (
+                    <small className="limit-text">Max limit reached</small>
+                  )}
+
+                </div>
+              );
+            })}
+          </div>
+
         </div>
       )}
 

@@ -1,19 +1,19 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Home from "./Home";
 import Help from "./Help";
-import { CartProvider } from "./CartContext";
+import CartPage from "./CartPage";
 
 function App() {
   return (
-    <CartProvider>
-      <Router>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/help" element={<Help />} />
-        </Routes>
-      </Router>
-    </CartProvider>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/help" element={<Help />} />
+      <Route path="/cart" element={<CartPage />} />
+
+      {/* fallback */}
+      <Route path="*" element={<Navigate to="/" />} />
+    </Routes>
   );
 }
 

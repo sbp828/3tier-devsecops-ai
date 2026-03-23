@@ -1,37 +1,26 @@
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import AuthModal from "./AuthModal";
+import "./App.css";
 
 function Home() {
   const navigate = useNavigate();
-  const [authType, setAuthType] = useState(null);
 
   return (
-    <div className="page">
+    <div className="home-page">
 
-      {/* TOP BAR */}
-      <div className="topbar">
-        <div className="logo">LocalHelp</div>
+      {/* HERO SECTION */}
+      <div className="home-hero">
 
-        <div className="auth-buttons">
-          <button onClick={() => setAuthType("signin")}>Sign In</button>
-          <button onClick={() => setAuthType("signup")}>Sign Up</button>
-        </div>
-      </div>
+        <h1>👋 Welcome to LocalHelp</h1>
+        <p>Your instant local assistance platform</p>
 
-      {/* AUTH MODAL */}
-      {authType && (
-        <AuthModal type={authType} onClose={() => setAuthType(null)} />
-      )}
-
-      {/* HERO */}
-      <div className="hero">
-        <h1>Welcome to our community!!</h1>
-        <p>Share, Help, Connect</p>
-
-        <button className="glow-btn" onClick={() => navigate("/help")}>
+        <button
+          className="primary-btn"
+          onClick={() => navigate("/help")}
+        >
           Need Local Help?
         </button>
+
       </div>
 
       {/* BLOG SECTION */}
@@ -39,7 +28,7 @@ function Home() {
 
         <div className="card">
           <h3>Community Update</h3>
-          <p>Helping each other builds a stronger society 💚</p>
+          <p>Helping each other builds a stronger society 🤝</p>
         </div>
 
         <div className="card">
