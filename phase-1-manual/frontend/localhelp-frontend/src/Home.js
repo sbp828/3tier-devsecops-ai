@@ -1,18 +1,15 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import "./App.css";
 
 function Home() {
   const navigate = useNavigate();
 
   return (
-    <div className="home-page">
+    <div className="home-container">
 
-      {/* HERO SECTION */}
-      <div className="home-hero">
-
-        <h1>👋 Welcome to LocalHelp</h1>
-        <p>Your instant local assistance platform</p>
+      <div className="hero">
+        <h1>LocalHelp</h1>
+        <p>Get medicines and local help instantly</p>
 
         <button
           className="primary-btn"
@@ -20,15 +17,12 @@ function Home() {
         >
           Need Local Help?
         </button>
-
       </div>
 
-      {/* BLOG SECTION */}
       <div className="blog">
-
         <div className="card">
           <h3>Community Update</h3>
-          <p>Helping each other builds a stronger society 🤝</p>
+          <p>Helping each other builds a stronger society ❤️</p>
         </div>
 
         <div className="card">
@@ -40,7 +34,6 @@ function Home() {
           <h3>Safety Tip</h3>
           <p>Always verify users before accepting help requests.</p>
         </div>
-
       </div>
 
     </div>

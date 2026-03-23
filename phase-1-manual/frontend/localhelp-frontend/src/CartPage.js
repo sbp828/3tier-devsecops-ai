@@ -1,75 +1,52 @@
 import React from "react";
 import { useCart } from "./CartContext";
-import { useNavigate } from "react-router-dom";
-import "./App.css";
 
 function CartPage() {
-  const { cart, increaseQty, decreaseQty } = useCart();
-  const navigate = useNavigate();
-
-  const totalItems = cart.reduce((sum, i) => sum + i.quantity, 0);
+  const { cartItems, placeOrder, lastOrder } = useCart();
 
   return (
-    <div className="page">
+    <div className="cart-container">
 
-      {/* TOP BAR */}
-      <div className="help-topbar">
-        <h2>Your Cart</h2>
+      <h2>Your Cart</h2>
 
-        <button onClick={() => navigate("/help")}>
-          ⬅ Back
-        </button>
-      </div>
-
-      {/* EMPTY */}
-      {cart.length === 0 ? (
-        <div style={{ padding: "20px" }}>
-          <h3>Cart is empty 🛒</h3>
-        </div>
-      ) : (
-        <>
-          <div className="medicine-grid">
-            {cart.map((item) => (
-              <div className="medicine-card" key={item.name}>
-                <h3>{item.name}</h3>
-
-                <div className="qty-controls">
-                  <button onClick={() => decreaseQty(item.name)}>
-                    ➖
-                  </button>
-
-                  <span>{item.quantity}</span>
-
-                  <button
-                    onClick={() => increaseQty(item.name)}
-                    disabled={item.quantity >= 5}
-                  >
-                    ➕
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div style={{ padding: "20px" }}>
-            <h3>Total Items: {totalItems}</h3>
-
-            <button
-              style={{
-                marginTop: "10px",
-                padding: "10px 20px",
-                background: "green",
-                color: "white",
-                border: "none",
-                cursor: "pointer"
-              }}
-              onClick={() => alert("Proceed to backend checkout 🚀")}
-            >
-              Proceed to Buy
-            </button>
-          </div>
-        </>
+      {/* CART EMPTY */}
+      {cartItems.length === 0 && !lastOrder && (
+        <p>No items in cart</p>
       )}
+
+      {/* CART ITEMS */}
+      {cartItems.map((item) => (
+        <div key={item.id} className="card">
+          <h4>{item.name}</h4>
+          <p>Qty: {item.quantity}</p>
+        </div>
+      ))}
+
+      {/* PROCEED BUTTON */}
+      {cartItems.length > 0 && (
+        <button className="primary-btn" onClick={placeOrder}>
+          Proceed to Buy
+        </button>
+      )}
+
+      {/* ORDER SUCCESS SCREEN */}
+      {lastOrder && (
+        <div className="order-box">
+          <h3>🎉 Order Placed Successfully!</h3>
+          <p>Total Items: {lastOrder.totalItems}</p>
+<p>Order ID: {lastOrder.orderId}</p>
+<p>Total Amount: ₹{lastOrder.totalAmount}</p>
+          <p>Time: {lastOrder.time}</p>
+
+          <h4>Items:</h4>
+          {lastOrder.items.map((i) => (
+            <p key={i.id}>
+              {i.name} × {i.quantity}
+            </p>
+          ))}
+        </div>
+      )}
+
     </div>
   );
 }
