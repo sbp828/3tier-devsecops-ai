@@ -1,0 +1,22 @@
+You are super user.
+-e Installing MySQL Server...[32m SUCCESS [0m
+-e Enabling MySQL Server...[32m SUCCESS [0m
+-e Starting MySQL Server...[32m SUCCESS [0m
+-e MySQL Root password is already setup...[33m SKIPPING [0m
+
+WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
+
+Failed to start mysqld.service: Unit mysqld.service not found.
+Failed to enable unit: Unit file mysqld.service does not exist.
+mysql: [Warning] Using a password on the command line interface can be insecure.
+Reading package lists...Database
+appdb
+information_schema
+mysql
+performance_schema
+sys
+
+Building dependency tree...
+Reading state information...
+mysql-server is already the newest version (8.0.45-0ubuntu0.24.04.1).
+0 upgraded, 0 newly installed, 0 to remove and 56 not upgraded.
