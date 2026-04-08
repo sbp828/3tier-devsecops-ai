@@ -57,9 +57,9 @@ All automation scripts are organized as:
 scripts/
 │
 ├── setup.sh        # Main entry point
-├── web.sh          # Web server setup (Nginx + React)
-├── app.sh          # App server setup (Spring Boot)
-├── db.sh           # Database setup (MySQL)
+├── frontend.sh          # Web server setup (Nginx + React)
+├── backend.sh          # App server setup (Spring Boot)
+├── mysql.sh           # Database setup (MySQL)
 ```
 
 ---
