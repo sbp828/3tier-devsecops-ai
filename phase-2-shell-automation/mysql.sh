@@ -10,8 +10,14 @@ Y="\e[33m"
 N="\e[0m"
 echo "Please enter DB password:"
 read mysql_root_password
+LOGS_DIR="./logs"
+mkdir -p $LOGS_DIR
+
+LOGFILE="$LOGS_DIR/mysql-$(date +%F-%H-%M-%S).log"
+
 echo "logfile location = $LOGFILE"
-exec > >(tee -a $LOGFILE) 2>&1
+
+exec > >(tee -a "$LOGFILE") 2>&1
 
 VALIDATE(){
    if [ $1 -ne 0 ]
