@@ -79,23 +79,8 @@ VALIDATE $? "Building Spring Boot JAR"
 JARFILE=$(ls target/*.jar | head -n 1)
 
 
-# Create service
-cat <<EOF > /etc/systemd/system/backend.service
-[Unit]
-Description=LocalHelp Backend Service
-After=network.target
-
-[Service]
-User=localhelp
-WorkingDirectory=/app/localhelp-backend
-ExecStart=/usr/bin/java -jar $JARFILE
-Restart=always
-Environment=SPRING_PROFILES_ACTIVE=prod
-
-[Install]
-WantedBy=multi-user.target
-EOF
-VALIDATE $? "Creating backend service file"
+cp /home/ubuntu/local-backend/backend.service /etc/systemd/system/backend.service &>>$LOGFILE
+VALIDATE $? "Copied backend service file"
 
 # Reload systemd
 systemctl daemon-reload

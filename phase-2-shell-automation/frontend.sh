@@ -77,18 +77,9 @@ fi
 
 echo "Creating Nginx reverse proxy config..." 
 
-cat <<EOF > /etc/nginx/default.d/localhelp.conf
-proxy_http_version 1.1;
-
-location /api/ {
-    proxy_pass http://localhost:8080/;
-}
-
-location /health {
-    stub_status on;
-    access_log off;
-}
-EOF
+#check your repo and path
+cp /home/ubuntu/local-frontend/localhelp.conf /etc/nginx/default.d/localhelp.conf &>>$LOGFILE
+VALIDATE $? "Copied localhelp conf"
 
 # Restart nginx
 systemctl restart nginx 
