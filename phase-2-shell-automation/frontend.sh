@@ -37,7 +37,7 @@ fi
 
 echo "================ INSTALLING NGINX ================="
 
-dnf install nginx -y &>>$LOGFILE
+apt install nginx -y &>>$LOGFILE
 VALIDATE $? "Installing nginx"
 
 systemctl enable nginx &>>$LOGFILE
