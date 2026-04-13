@@ -8,7 +8,7 @@ R="\e[31m"
 G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
-DB_HOST="db.localhelp.store"
+DB_HOST="localhost"
 echo "Please enter DB password:"
 read mysql_root_password
 LOGS_DIR="./logs"
