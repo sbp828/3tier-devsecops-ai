@@ -51,7 +51,7 @@ echo "================ INSTALLING NODEJS ================="
 curl -fsSL https://deb.nodesource.com/setup_20.x | bash - &>>$LOGFILE
 VALIDATE $? "Adding NodeSource repo"
 
-dnf install -y nodejs &>>$LOGFILE
+apt install -y nodejs &>>$LOGFILE
 VALIDATE $? "Installing Node.js"
 
 node -v &>>$LOGFILE
