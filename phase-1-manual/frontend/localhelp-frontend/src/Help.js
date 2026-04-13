@@ -11,7 +11,7 @@ function Help() {
 
   // ✅ FETCH FROM BACKEND
   useEffect(() => {
-    fetch("http://localhost:8080/medicines")
+    fetch("http://backend.localhelp.store:8080/medicines")
       .then((res) => res.json())
       .then((data) => setMedicines(data))
       .catch((err) => console.error(err));
