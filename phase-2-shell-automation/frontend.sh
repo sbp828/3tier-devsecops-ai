@@ -11,7 +11,7 @@ Y="\e[33m"
 N="\e[0m"
 
 APP_DIR="/var/www/localhelp"
-NGINX_CONF_SOURCE="/home/ubuntu/localhelp.conf"
+NGINX_CONF_SOURCE="/home/ubuntu/3tier-devsecops-ai/phase-2-shell-automation/localhelp.conf"
 NGINX_CONF_DEST="/etc/nginx/conf.d/localhelp.conf"
 
 VALIDATE(){
