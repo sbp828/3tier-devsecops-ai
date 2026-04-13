@@ -10,9 +10,22 @@ G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
 
+APP_DIR="/var/www/localhelp"
 REPO="/home/ubuntu/localhelp-frontend"
+NGINX_CONF_SOURCE="/home/ubuntu/localhelp.conf"
+NGINX_CONF_DEST="/etc/nginx/conf.d/localhelp.conf"
 
-echo "logfile location = $LOGFILE"
+VALIDATE(){
+   if [ $1 -ne 0 ]
+   then
+        echo -e "$2...$R FAILURE $N"
+        exit 1
+    else
+        echo -e "$2...$G SUCCESS $N"
+    fi
+}
+
+echo "================ CHECKING ROOT ================="
 
 if [ $USERID -ne 0 ]
 then
@@ -22,96 +35,73 @@ else
     echo "You are super user."
 fi
 
-VALIDATE(){
-    if [ $1 -ne 0 ]
-    then
-        echo -e "$2...$R FAILURE $N"
-        exit 1
-    else
-        echo -e "$2...$G SUCCESS $N"
-    fi
-}
+echo "================ INSTALLING NGINX ================="
 
-echo "================ UPDATING SYSTEM ================"
-apt update -y
-
-echo "================ INSTALLING NGINX ================"
-apt install nginx -y
+dnf install nginx -y &>>$LOGFILE
 VALIDATE $? "Installing nginx"
 
-systemctl start nginx
-VALIDATE $? "Starting nginx"
-
-systemctl enable nginx
+systemctl enable nginx &>>$LOGFILE
 VALIDATE $? "Enabling nginx"
 
-echo "================ INSTALLING NODEJS ================"
+systemctl start nginx &>>$LOGFILE
+VALIDATE $? "Starting nginx"
 
-curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
+echo "================ INSTALLING NODEJS ================="
+
+curl -fsSL https://deb.nodesource.com/setup_20.x | bash - &>>$LOGFILE
 VALIDATE $? "Adding NodeSource repo"
 
-apt install -y nodejs
+dnf install -y nodejs &>>$LOGFILE
 VALIDATE $? "Installing Node.js"
 
-node -v
-npm -v
+node -v &>>$LOGFILE
+npm -v &>>$LOGFILE
 
-echo "================ BUILDING REACT APP ================"
+echo "================ FETCHING REACT CODE ================="
 
-cd $REPO || exit 1
+if [ -d "$REPO" ]
+then
+    echo "Repo exists → pulling latest code"
+    cd $REPO
+    git pull &>>$LOGFILE
+else
+    echo "Cloning repository"
+    git clone https://github.com/sbp828/localhelp-frontend.git $REPO &>>$LOGFILE
+fi
 
-npm install
+VALIDATE $? "Fetching frontend code"
+
+cd $REPO
+
+echo "================ BUILDING REACT APP ================="
+
+rm -rf node_modules package-lock.json
+npm install &>>$LOGFILE
 VALIDATE $? "npm install"
 
-npm run build
+npm run build &>>$LOGFILE
 VALIDATE $? "React build"
 
-echo "================ DEPLOYING BUILD ================"
+echo "================ DEPLOYING BUILD ================="
 
-rm -rf /var/www/localhelp
-mkdir -p /var/www/localhelp
+rm -rf $APP_DIR
+mkdir -p $APP_DIR
 
-cp -r build/* /var/www/localhelp/
-VALIDATE $? "Copying build files"
+cp -r build/* $APP_DIR/
+VALIDATE $? "Deploying React build"
 
-echo "================ CONFIGURING NGINX ================"
+echo "================ CONFIGURING NGINX ================="
 
-cat > /etc/nginx/sites-available/localhelp <<EOF
-server {
-    listen 80;
-    server_name _;
+cp $NGINX_CONF_SOURCE $NGINX_CONF_DEST
+VALIDATE $? "Copying nginx config"
 
-    root /var/www/localhelp;
-    index index.html;
+nginx -t &>>$LOGFILE
+VALIDATE $? "Nginx config test"
 
-    location / {
-        try_files \$uri /index.html;
-    }
-
-    location /api/ {
-        proxy_pass http://backend.localhelp.store:8080;
-        proxy_set_header Host \$host;
-        proxy_set_header X-Real-IP \$remote_addr;
-    }
-}
-EOF
-
-VALIDATE $? "Creating nginx config"
-
-ln -sf /etc/nginx/sites-available/localhelp /etc/nginx/sites-enabled/localhelp
-
-rm -f /etc/nginx/sites-enabled/default
-
-VALIDATE $? "Removing default site"
-
-echo "================ TESTING NGINX ================"
-nginx -t
-VALIDATE $? "Nginx syntax check"
-
-systemctl restart nginx
+systemctl restart nginx &>>$LOGFILE
 VALIDATE $? "Restarting nginx"
 
-echo "================ DEPLOYMENT DONE ================"
+echo "================ DEPLOYMENT DONE ================="
 
 echo "🎉 Frontend deployed successfully!"
-echo "👉 Open: http://<your-ec2-public-ip>"
+echo "👉 http://<EC2-PUBLIC-IP>"
