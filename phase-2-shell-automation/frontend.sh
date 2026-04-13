@@ -11,7 +11,6 @@ Y="\e[33m"
 N="\e[0m"
 
 APP_DIR="/var/www/localhelp"
-REPO="/home/ubuntu/localhelp-frontend"
 NGINX_CONF_SOURCE="/home/ubuntu/localhelp.conf"
 NGINX_CONF_DEST="/etc/nginx/conf.d/localhelp.conf"
 
@@ -59,19 +58,13 @@ npm -v &>>$LOGFILE
 
 echo "================ FETCHING REACT CODE ================="
 
-if [ -d "$REPO" ]
-then
-    echo "Repo exists → pulling latest code"
-    cd $REPO
-    git pull &>>$LOGFILE
-else
-    echo "Cloning repository"
-    git clone https://github.com/sbp828/localhelp-frontend.git $REPO &>>$LOGFILE
-fi
+echo "Cloning repository (fresh deploy)..."
 
-VALIDATE $? "Fetching frontend code"
+rm -rf /tmp/localhelp-frontend
+git clone https://github.com/sbp828/localhelp-frontend.git /tmp/localhelp-frontend &>>$LOGFILE
+VALIDATE $? "Cloning frontend repo"
 
-cd $REPO
+cd /tmp/localhelp-frontend
 
 echo "================ BUILDING REACT APP ================="
 
@@ -100,6 +93,10 @@ VALIDATE $? "Nginx config test"
 
 systemctl restart nginx &>>$LOGFILE
 VALIDATE $? "Restarting nginx"
+
+echo "================ CLEANUP ================="
+
+rm -rf /tmp/localhelp-frontend
 
 echo "================ DEPLOYMENT DONE ================="
 
