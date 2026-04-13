@@ -24,58 +24,56 @@ VALIDATE(){
     fi
 }
 
-echo "================ CHECKING ROOT ================="
+echo "================ CHECKING ROOT =================" | tee -a $LOGFILE
 
 if [ $USERID -ne 0 ]
 then
-    echo "Please run this script with root access."
+    echo "Please run this script with root access." | tee -a $LOGFILE
     exit 1
 else
-    echo "You are super user."
+    echo "You are super user." | tee -a $LOGFILE
 fi
 
-echo "================ INSTALLING NGINX ================="
+echo "================ INSTALLING NGINX =================" | tee -a $LOGFILE
 
-apt install nginx -y &>>$LOGFILE
+apt install nginx -y 2>&1 | tee -a $LOGFILE
 VALIDATE $? "Installing nginx"
 
-systemctl enable nginx &>>$LOGFILE
+systemctl enable nginx 2>&1 | tee -a $LOGFILE
 VALIDATE $? "Enabling nginx"
 
-systemctl start nginx &>>$LOGFILE
+systemctl start nginx 2>&1 | tee -a $LOGFILE
 VALIDATE $? "Starting nginx"
 
-echo "================ INSTALLING NODEJS ================="
+echo "================ INSTALLING NODEJS =================" | tee -a $LOGFILE
 
-curl -fsSL https://deb.nodesource.com/setup_20.x | bash - &>>$LOGFILE
+curl -fsSL https://deb.nodesource.com/setup_20.x | bash - 2>&1 | tee -a $LOGFILE
 VALIDATE $? "Adding NodeSource repo"
 
-apt install -y nodejs &>>$LOGFILE
+apt install -y nodejs 2>&1 | tee -a $LOGFILE
 VALIDATE $? "Installing Node.js"
 
-node -v &>>$LOGFILE
-npm -v &>>$LOGFILE
+node -v | tee -a $LOGFILE
+npm -v | tee -a $LOGFILE
 
-echo "================ FETCHING REACT CODE ================="
-
-echo "Cloning repository (fresh deploy)..."
+echo "================ FETCHING REACT CODE =================" | tee -a $LOGFILE
 
 rm -rf /tmp/localhelp-frontend
-git clone https://github.com/sbp828/localhelp-frontend.git /tmp/localhelp-frontend &>>$LOGFILE
+git clone https://github.com/sbp828/localhelp-frontend.git /tmp/localhelp-frontend 2>&1 | tee -a $LOGFILE
 VALIDATE $? "Cloning frontend repo"
 
 cd /tmp/localhelp-frontend
 
-echo "================ BUILDING REACT APP ================="
+echo "================ BUILDING REACT APP =================" | tee -a $LOGFILE
 
 rm -rf node_modules package-lock.json
-npm install &>>$LOGFILE
+npm install 2>&1 | tee -a $LOGFILE
 VALIDATE $? "npm install"
 
-npm run build &>>$LOGFILE
+npm run build 2>&1 | tee -a $LOGFILE
 VALIDATE $? "React build"
 
-echo "================ DEPLOYING BUILD ================="
+echo "================ DEPLOYING BUILD =================" | tee -a $LOGFILE
 
 rm -rf $APP_DIR
 mkdir -p $APP_DIR
@@ -83,22 +81,22 @@ mkdir -p $APP_DIR
 cp -r build/* $APP_DIR/
 VALIDATE $? "Deploying React build"
 
-echo "================ CONFIGURING NGINX ================="
+echo "================ CONFIGURING NGINX =================" | tee -a $LOGFILE
 
 cp $NGINX_CONF_SOURCE $NGINX_CONF_DEST
 VALIDATE $? "Copying nginx config"
 
-nginx -t &>>$LOGFILE
+nginx -t 2>&1 | tee -a $LOGFILE
 VALIDATE $? "Nginx config test"
 
-systemctl restart nginx &>>$LOGFILE
+systemctl restart nginx 2>&1 | tee -a $LOGFILE
 VALIDATE $? "Restarting nginx"
 
-echo "================ CLEANUP ================="
+echo "================ CLEANUP =================" | tee -a $LOGFILE
 
 rm -rf /tmp/localhelp-frontend
 
-echo "================ DEPLOYMENT DONE ================="
+echo "================ DEPLOYMENT DONE =================" | tee -a $LOGFILE
 
 echo "🎉 Frontend deployed successfully!"
 echo "👉 http://<EC2-PUBLIC-IP>"
