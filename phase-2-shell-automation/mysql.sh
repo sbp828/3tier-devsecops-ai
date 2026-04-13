@@ -8,6 +8,7 @@ R="\e[31m"
 G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
+DB_HOST="db.localhelp.store"
 echo "Please enter DB password:"
 read mysql_root_password
 LOGS_DIR="./logs"
@@ -51,7 +52,7 @@ VALIDATE $? "Starting MySQL Server"
 # VALIDATE $? "Setting up root password"
 
 #Below code will be useful for idempotent nature
-mysql -h localhost -uroot -p${mysql_root_password} -e "SHOW DATABASES;">>$LOGFILE
+mysql -h ${DB_HOST} -uroot -p${mysql_root_password} -e "SHOW DATABASES;">>$LOGFILE
 if [ $? -ne 0 ]
 then
     mysql_secure_installation --set-root-pass ${mysql_root_password}
