@@ -80,7 +80,7 @@ VALIDATE $? "Building Spring Boot JAR"
 mv target/*.jar app.jar
 
 
-cp /app/localhelp-backend/backend.service /etc/systemd/system/
+cp ~/app/localhelp-backend/backend.service /etc/systemd/system/
 VALIDATE $? "Copied backend service file"
 
 # Reload systemd
